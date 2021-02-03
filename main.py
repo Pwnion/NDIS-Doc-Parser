@@ -1,9 +1,9 @@
 from parse import build_record_from_document, build_record_from_string
 from export import word_export, excel_export
 import PySimpleGUI as sg
+import subprocess as sp
 
 TITLE = 'NDIS Document Parser Application'
-MENU = [['&Options', ['Check for Updates']]]
 INPUT_DOCUMENT_ROW = [
     sg.Text('Input Word Document:', size=(25, 1)),
     sg.In(size=(60, 1), disabled=True, enable_events=True),
@@ -41,7 +41,6 @@ COLUMN = [
 ]
 LAYOUT = [
     [
-        sg.Menu(MENU),
         sg.Column(COLUMN, element_justification='center')
     ]
 ]
@@ -107,7 +106,7 @@ def handle_window():
             break
 
         # Input Path was updated
-        if event == 1:
+        if event == 0:
             path = values['-INPUT FILEBROWSE-']
             if not path:
                 continue
@@ -142,6 +141,9 @@ def handle_window():
                 excel_export(record, export_folder=output_folder_path)
 
             word_export(record, output_folder_path)
+
+            output_folder_path = output_folder_path.replace('/', '\\')
+            sp.Popen(f'explorer {output_folder_path}')
 
     window.close()
 
