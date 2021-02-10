@@ -3,7 +3,8 @@ from export import word_export, excel_export
 import PySimpleGUI as sg
 import subprocess as sp
 
-TITLE = 'NDIS Document Parser Application'
+VERSION = '1.0.1'
+TITLE = f'NDIS Document Parser Application v{VERSION}'
 INPUT_DOCUMENT_ROW = [
     sg.Text('Input Word Document:', size=(25, 1)),
     sg.In(size=(60, 1), disabled=True, enable_events=True),

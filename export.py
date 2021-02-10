@@ -104,8 +104,6 @@ def word_export(record, export_folder):
         if value.goals != TBC:
             for goal in value.goals:
                 goals.append(goal)
-        else:
-            goals.append('')
 
     goals.extend(['' for _ in range(12 - len(goals))])
 
