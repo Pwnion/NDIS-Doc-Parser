@@ -116,6 +116,7 @@ class Record:
                  supports,
                  support_coordination_management_type,
                  support_coordination_hours,
+                 funded_supports_total,
                  additional_email_address,
                  service_region_id):
         self.client = client
@@ -123,6 +124,7 @@ class Record:
         self.supports = supports
         self.support_coordination_management_type = support_coordination_management_type
         self.support_coordination_hours = support_coordination_hours
+        self.funded_supports_total = funded_supports_total
         self.additional_email_address = additional_email_address
         self.service_region_id = service_region_id
 
@@ -175,6 +177,7 @@ class Record:
             f'    Support Coordination:\n'
             f'        Mangement Type: {self.support_coordination_management_type}\n'
             f'        Hours: {self.support_coordination_hours}\n'
+            f'    Funded Supports Total: {self.funded_supports_total}\n'
             f'    Additional Email Address: {self.additional_email_address}\n'
             f'    Service Region ID: {self.service_region_id}'
         )
@@ -707,6 +710,9 @@ def build_record_from_document(path):
         )
     }
 
+    # Get the funded supports total
+    funded_supports_total = get_funded_supports_total(document)
+
     # Get the support coordination management type
     support_coordination_management = get_support_coordination_management_type(document)
 
@@ -724,6 +730,7 @@ def build_record_from_document(path):
         supports,
         support_coordination_management,
         TBC,
+        funded_supports_total,
         additional_email_address,
         TBC
     )
@@ -800,7 +807,7 @@ def build_record_from_string(string):
 
         # Get the line index to the last section of constant data
         line_index += 2
-        const_indices = list(range(line_index, line_index + 4))
+        const_indices = list(range(line_index, line_index + 5))
         const_data.extend([lines[i][index(lines[i], ':.')[1]:].strip() for i in const_indices])
 
         # Build a Client object
@@ -827,6 +834,7 @@ def build_record_from_string(string):
             const_data[12],
             const_data[13],
             const_data[14],
+            const_data[15],
             TBC
         )
 

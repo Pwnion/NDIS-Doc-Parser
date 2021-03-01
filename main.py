@@ -1,9 +1,9 @@
 from parse import build_record_from_document, build_record_from_string
-from export import word_export, excel_export
+from export import word_export, excel_export, record_export
 import PySimpleGUI as sg
 import subprocess as sp
 
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 TITLE = f'NDIS Document Parser Application v{VERSION}'
 INPUT_DOCUMENT_ROW = [
     sg.Text('Input Word Document:', size=(25, 1)),
@@ -120,6 +120,7 @@ def handle_window():
                 data_multiline.update(disabled=False, text_color='black')
                 export_button.update(disabled=False)
                 ml_enabled = True
+
         # Clicked the 'Export Data' button
         elif event == '-EXPORT BUTTON-':
             output_folder_path = output_folder_text.get()
@@ -141,6 +142,7 @@ def handle_window():
             else:
                 excel_export(record, export_folder=output_folder_path)
 
+            record_export(record, output_folder_path)
             word_export(record, output_folder_path)
 
             output_folder_path = output_folder_path.replace('/', '\\')

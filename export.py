@@ -76,6 +76,7 @@ def word_export(record, export_folder):
 
     """
     placeholder_to_val = {
+        '[title]': record.client.title,
         '[full_name]': record.client.full_name,
         '[dob]': record.client.dob,
         '[gender]': record.client.gender,
@@ -96,6 +97,7 @@ def word_export(record, export_folder):
         '[core_supports_total]': record.supports['Core'].total,
         '[capacity_building_supports_total]': record.supports['Capacity Building'].total,
         '[capital_supports_total]': record.supports['Capital'].total,
+        '[funded_supports_total]': record.funded_supports_total,
         '[support_coordination_hours]': record.support_coordination_hours
     }
 
@@ -222,3 +224,19 @@ def excel_export(record, export_folder='', optional_xml_path=''):
     ws = wb.active
     ws.append(data)
     wb.save(path)
+
+
+def record_export(record, export_folder):
+    """Exports the data in a Record object into a blank text file
+
+    Args:
+        record(Record): A Record object
+        export_folder(str): The absolute path of the folder to export to (optional)
+
+    Returns:
+        None
+
+    """
+    export_path = os.path.join(export_folder, get_new_filename(record, 'Data', 'txt'))
+    with open(export_path, 'w') as file:
+        file.write(str(record))
